@@ -24,9 +24,8 @@ namespace QuotableLambda
                 BotName = "QuoteBotDispute",
                 BotAlias = "Initial",
                 InputText = text,
-                UserId = userId
+                UserId = "hfdshiodsio" // TODO: come up with proper ID scheme
             }).Result;
-
             if (result.DialogState == DialogState.ReadyForFulfillment)
             {
                 return _dataService.DeleteQuote(result.SessionAttributes["quotee"], result.SessionAttributes["quote"])

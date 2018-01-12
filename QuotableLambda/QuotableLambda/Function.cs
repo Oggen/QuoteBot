@@ -28,7 +28,6 @@ namespace QuotableLambda
             var message = roomMessage.Item.Message.MessageText.Trim();
             var command = message.Split(' ')[1].ToLower();
             var text = string.Join(" ", message.Split(' ').Skip(2).ToArray());
-            var user = $"@{roomMessage.Item.Message.From.MentionName}";
 
             string responseText;
 
@@ -41,7 +40,7 @@ namespace QuotableLambda
                 }
                 else
                 {
-                    quote.AddedBy = user;
+                    quote.AddedBy = $"@{roomMessage.Item.Message.From.MentionName}";
                     quote.AddedOn = DateTime.UtcNow;
                     responseText = _dataService.AddQuote(quote) ? "Quote added." : "Trouble adding quote.";
                 }
@@ -63,7 +62,7 @@ namespace QuotableLambda
             }
             else if (command == "dispute")
             {
-                responseText = string.IsNullOrWhiteSpace(text) ? _lexService.PostText(command, user) : _lexService.PostText(text, user);
+                responseText = string.IsNullOrWhiteSpace(text) ? _lexService.PostText(command, roomMessage.Item.Message.From.MentionName) : _lexService.PostText(text, roomMessage.Item.Message.From.MentionName);
             }
             else
             {
