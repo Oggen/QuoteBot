@@ -15,7 +15,7 @@ namespace QuotableLambda
             _random = new Random();
         }
 
-        public Quote getRandomQuote(string quotee = null)
+        public Quote GetRandomQuote(string quotee = null)
         {
             var quotes = quotee == null ? _dbService.GetAllQuotes() : _dbService.GetAllQuotesByQuotee(quotee);
             if (quotes.Count == 0)
@@ -28,9 +28,14 @@ namespace QuotableLambda
             }
         }
 
-        public bool addQuote(Quote quote)
+        public bool AddQuote(Quote quote)
         {
             return _dbService.AddQuote(quote);
+        }
+
+        public bool DeleteQuote(string quotee, string quoteText)
+        {
+            return _dbService.DeleteQuote(quotee, quoteText);
         }
     }
 }

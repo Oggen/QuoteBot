@@ -44,6 +44,19 @@ namespace QuotableLambda
             
         }
 
+        public bool DeleteQuote(string quotee, string quoteText)
+        {
+            return _db.DeleteItemAsync(new DeleteItemRequest
+            {
+                TableName = TableName,
+                Key =
+                {
+                    ["Quotee"] = new AttributeValue(quotee),
+                    ["Quote"] = new AttributeValue(quoteText)
+                }
+            }).Result.HttpStatusCode == System.Net.HttpStatusCode.OK;
+        }
+
         private Quote ParseQuote(Dictionary<string, AttributeValue> item)
         {
             var quote = new Quote();
@@ -54,6 +67,7 @@ namespace QuotableLambda
                     case "Quote": quote.QuoteText = entry.Value.S; break;
                     case "Quotee": quote.Quotee = entry.Value.S; break;
                     case "AddedBy": quote.AddedBy = entry.Value.S; break;
+                    case "AddedOn": quote.AddedOn = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(double.Parse(entry.Value.N)); break;
                 }
             }
             return quote;
@@ -73,6 +87,10 @@ namespace QuotableLambda
             if (quote.QuoteText != null)
             {
                 item.Add("Quote", new AttributeValue(quote.QuoteText));
+            }
+            if (quote.AddedOn != null)
+            {
+                item.Add("AddedOn", new AttributeValue { N = (quote.AddedOn.Value - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds.ToString() });
             }
             return item;
         }

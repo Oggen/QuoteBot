@@ -9,5 +9,7 @@ namespace QuotableLambda
         List<Quote> GetAllQuotesByQuotee(string quotee);
 
         bool AddQuote(Quote quote);
+
+        bool DeleteQuote(string quotee, string quoteText);
     }
 }

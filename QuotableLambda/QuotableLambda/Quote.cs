@@ -9,6 +9,7 @@ namespace QuotableLambda
         public string Quotee { get; set; }
         public string QuoteText { get; set; }
         public string AddedBy { get; set; }
+        public DateTime? AddedOn { get; set; }
 
         public override string ToString()
         {

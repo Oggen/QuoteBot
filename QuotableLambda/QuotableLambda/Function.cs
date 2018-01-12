@@ -14,10 +14,12 @@ namespace QuotableLambda
     public class Function
     {
         private readonly DataService _dataService;
+        private readonly LexService _lexService;
 
         public Function()
         {
             _dataService = new DataService(new DynamoService());
+            _lexService = new LexService(_dataService);
         }
 
         public APIGatewayProxyResponse FunctionHandler(APIGatewayProxyRequest request, ILambdaContext context)
@@ -26,6 +28,7 @@ namespace QuotableLambda
             var message = roomMessage.Item.Message.MessageText.Trim();
             var command = message.Split(' ')[1].ToLower();
             var text = string.Join(" ", message.Split(' ').Skip(2).ToArray());
+            var user = $"@{roomMessage.Item.Message.From.MentionName}";
 
             string responseText;
 
@@ -38,8 +41,9 @@ namespace QuotableLambda
                 }
                 else
                 {
-                    quote.AddedBy = $"@{roomMessage.Item.Message.From.MentionName}";
-                    responseText = _dataService.addQuote(quote) ? "Quote added." : "Trouble adding quote.";
+                    quote.AddedBy = user;
+                    quote.AddedOn = DateTime.UtcNow;
+                    responseText = _dataService.AddQuote(quote) ? "Quote added." : "Trouble adding quote.";
                 }
             }
             else if (command == "random")
@@ -48,14 +52,18 @@ namespace QuotableLambda
 
                 if (string.IsNullOrWhiteSpace(text))
                 {
-                    quote = _dataService.getRandomQuote();
+                    quote = _dataService.GetRandomQuote();
                 }
                 else
                 {
-                    quote = _dataService.getRandomQuote(text);
+                    quote = _dataService.GetRandomQuote(text);
                 }
 
                 responseText = quote?.ToString() ?? "No matching quote found.";
+            }
+            else if (command == "dispute")
+            {
+                responseText = string.IsNullOrWhiteSpace(text) ? _lexService.PostText(command, user) : _lexService.PostText(text, user);
             }
             else
             {
