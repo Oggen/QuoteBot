@@ -11,10 +11,10 @@
     "configuration" : "Release",
     "framework"     : "netcoreapp1.0",
     "function-runtime" : "dotnetcore1.0",
-    "function-memory-size" : 128,
+    "function-memory-size" : 512,
     "function-timeout"     : 15,
     "function-handler"     : "QuotableLambda::QuotableLambda.Function::FunctionHandler",
-    "function-name"        : "DotNetTesting",
+    "function-name"        : "QuoteBot",
     "function-role"        : "arn:aws:iam::637778433658:role/LambdaQuoteBot",
     "environment-variables" : ""
 }
