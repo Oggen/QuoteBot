@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuotableLambda", "QuotableLambda\QuotableLambda.csproj", "{01BC8182-73C4-48F7-950E-26F24B03DE83}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01BC8182-73C4-48F7-950E-26F24B03DE83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01BC8182-73C4-48F7-950E-26F24B03DE83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01BC8182-73C4-48F7-950E-26F24B03DE83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01BC8182-73C4-48F7-950E-26F24B03DE83}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8EBD3213-D753-4F1F-92F0-6ED1BB8400D3}
+	EndGlobalSection
+EndGlobal
