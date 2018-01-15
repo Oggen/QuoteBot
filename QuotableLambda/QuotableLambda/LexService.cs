@@ -24,7 +24,7 @@ namespace QuotableLambda
                 BotName = "QuoteBotDispute",
                 BotAlias = "Initial",
                 InputText = text,
-                UserId = "hfdshiodsio" // TODO: come up with proper ID scheme
+                UserId = userId + userId
             }).Result;
             if (result.DialogState == DialogState.ReadyForFulfillment)
             {
