@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace QuotableLambda
@@ -36,6 +37,24 @@ namespace QuotableLambda
         public bool DeleteQuote(string quotee, string quoteText)
         {
             return _dbService.DeleteQuote(quotee, quoteText);
+        }
+
+        public Leaderboard GetLeaderboard(int topCount)
+        {
+            var quotes = _dbService.GetAllQuotes();
+            return new Leaderboard
+            {
+                MostQuoted = quotes.GroupBy(quote => quote.Quotee)
+                    .Select(group => new Tuple<string, int>(group.Key, group.Count()))
+                    .OrderByDescending(tuple => tuple.Item2)
+                    .Take(topCount)
+                    .ToArray(),
+                MostReported = quotes.GroupBy(quote => quote.AddedBy)
+                    .Select(group => new Tuple<string, int>(group.Key, group.Count()))
+                    .OrderByDescending(tuple => tuple.Item2)
+                    .Take(topCount)
+                    .ToArray()
+            };
         }
     }
 }

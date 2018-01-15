@@ -7,6 +7,7 @@ using HipChat.Net.Models.Response;
 using Newtonsoft.Json;
 using System.Linq;
 using System;
+using System.Text;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
 namespace QuotableLambda
@@ -64,9 +65,32 @@ namespace QuotableLambda
             {
                 responseText = string.IsNullOrWhiteSpace(text) ? _lexService.PostText(command, roomMessage.Item.Message.From.MentionName) : _lexService.PostText(text, roomMessage.Item.Message.From.MentionName);
             }
+            else if (command == "leaderboard")
+            {
+                var leaderboard = _dataService.GetLeaderboard(3);
+                var sb = new StringBuilder();
+                sb.AppendLine("Leaderboard");
+                sb.AppendLine("Most Quoted:");
+                foreach (var entry in leaderboard.MostQuoted)
+                {
+                    sb.AppendLine($"{entry.Item1}: {entry.Item2}");
+                }
+                sb.AppendLine("Most Quotes Added:");
+                foreach (var entry in leaderboard.MostReported)
+                {
+                    sb.AppendLine($"{entry.Item1}: {entry.Item2}");
+                }
+                responseText = sb.ToString();
+            }
             else
             {
-                responseText = "Commands:\nadd \"<quote>\" <quotee>\nrandom [quotee]";
+                var sb = new StringBuilder();
+                sb.AppendLine("Commands");
+                sb.AppendLine("add \"<quote>\" <quotee>");
+                sb.AppendLine("random [quotee]");
+                sb.AppendLine("dispute");
+                sb.AppendLine("leaderboard");
+                responseText = sb.ToString();
             }
 
             return new APIGatewayProxyResponse
