@@ -108,7 +108,7 @@ namespace QuotableLambda
         private Quote ParseQuote(string input)
         {
             var split = input.Split('"');
-            if (split.Length < 3 || split[0].Length != 0) return null;
+            if (split.Length < 3 || split[0].Length != 0 || split[split.Length - 1].Length == 0) return null;
             var quotee = split[split.Length - 1].Trim();
             split[split.Length - 1] = "";
             var quote = string.Join("\"", split);
