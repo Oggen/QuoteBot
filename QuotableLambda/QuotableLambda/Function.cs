@@ -67,20 +67,28 @@ namespace QuotableLambda
             }
             else if (command == "leaderboard")
             {
-                var leaderboard = _dataService.GetLeaderboard(3);
-                var sb = new StringBuilder();
-                sb.AppendLine("Leaderboard");
-                sb.AppendLine("Most Quoted:");
-                foreach (var entry in leaderboard.MostQuoted)
+                int count = 3;
+                if (string.IsNullOrWhiteSpace(text) || int.TryParse(text, out count))
                 {
-                    sb.AppendLine($"{entry.Item1}: {entry.Item2}");
+                    var leaderboard = _dataService.GetLeaderboard(count);
+                    var sb = new StringBuilder();
+                    sb.AppendLine("Leaderboard");
+                    sb.AppendLine("Most Quoted:");
+                    foreach (var entry in leaderboard.MostQuoted)
+                    {
+                        sb.AppendLine($"{entry.Item1}: {entry.Item2}");
+                    }
+                    sb.AppendLine("Most Quotes Added:");
+                    foreach (var entry in leaderboard.MostReported)
+                    {
+                        sb.AppendLine($"{entry.Item1}: {entry.Item2}");
+                    }
+                    responseText = sb.ToString();
                 }
-                sb.AppendLine("Most Quotes Added:");
-                foreach (var entry in leaderboard.MostReported)
+                else
                 {
-                    sb.AppendLine($"{entry.Item1}: {entry.Item2}");
+                    responseText = "Usage: leaderboard [count]";
                 }
-                responseText = sb.ToString();
             }
             else
             {
@@ -89,7 +97,7 @@ namespace QuotableLambda
                 sb.AppendLine("add \"<quote>\" <quotee>");
                 sb.AppendLine("random [quotee]");
                 sb.AppendLine("dispute");
-                sb.AppendLine("leaderboard");
+                sb.AppendLine("leaderboard [count]");
                 responseText = sb.ToString();
             }
 
