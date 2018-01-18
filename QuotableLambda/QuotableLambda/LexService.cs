@@ -17,14 +17,15 @@ namespace QuotableLambda
             _dataService = dataService;
         }
 
-        public string PostText(string text, string userId)
+        public string PostText(string text, string mentionName)
         {
             var result = _lex.PostTextAsync(new PostTextRequest
             {
                 BotName = "QuoteBotDispute",
                 BotAlias = "Initial",
                 InputText = text,
-                UserId = userId + userId
+                UserId = mentionName + mentionName,
+                SessionAttributes = { ["mentionName"] = mentionName }
             }).Result;
             if (result.DialogState == DialogState.ReadyForFulfillment)
             {

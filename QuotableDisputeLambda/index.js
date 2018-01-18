@@ -16,9 +16,11 @@ exports.handler = (event, context, callback) => {
                         item.AddedOn = { N: 0 };
                     }
                 });
-                data.Items.sort((a, b) => { return b.AddedOn.N - a.AddedOn.N });
 
-                if (data.Items.length === 0 || data.Items[0].AddedOn.N === 0) {
+                let quotes = data.Items.filter(q => q.Quotee.S === "@" + event.sessionAttributes.mentionName)
+                quotes.sort((a, b) => { return b.AddedOn.N - a.AddedOn.N });
+
+                if (quotes.length === 0 || quotes[0].AddedOn.N === 0) {
                     callback(null, {
                         dialogAction: {
                             type: "Close",
@@ -31,7 +33,7 @@ exports.handler = (event, context, callback) => {
                     });
                 }
                 else {
-                    let recentQuote = data.Items[0];
+                    let recentQuote = quotes[0];
                     callback(null, {
                         sessionAttributes: {
                             quote: recentQuote.Quote.S,
