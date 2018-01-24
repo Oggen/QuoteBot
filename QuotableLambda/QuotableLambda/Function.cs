@@ -53,13 +53,13 @@ namespace QuotableLambda
                 if (string.IsNullOrWhiteSpace(text))
                 {
                     quote = _dataService.GetRandomQuote();
+                    responseText = quote?.ToString() ?? "There are no quotes in the system. Add some!";
                 }
                 else
                 {
                     quote = _dataService.GetRandomQuote(text);
+                    responseText = quote?.ToString() ?? $"{text} has no quotes. Must be pretty boring.";
                 }
-
-                responseText = quote?.ToString() ?? "No matching quote found.";
             }
             else if (command == "dispute")
             {
