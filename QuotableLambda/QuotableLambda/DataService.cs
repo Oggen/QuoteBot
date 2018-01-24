@@ -32,7 +32,7 @@ namespace QuotableLambda
 
         public Quote GetRandomMatchingQuote(string searchTerm)
         {
-            var regex = new Regex($"\\W{searchTerm.ToLower()}\\W");
+            var regex = new Regex(searchTerm.ToLower());
             var matchingQuotes = _dbService.GetAllQuotes().Where(q => regex.IsMatch(q.QuoteText.ToLower())).ToList();
             if (matchingQuotes.Count == 0)
             {
