@@ -48,17 +48,24 @@ namespace QuotableLambda
             }
             else if (command == "random")
             {
-                Quote quote;
-
                 if (string.IsNullOrWhiteSpace(text))
                 {
-                    quote = _dataService.GetRandomQuote();
-                    responseText = quote?.ToString() ?? "There are no quotes in the system. Add some!";
+                    responseText = _dataService.GetRandomQuote()?.ToString() ?? "There are no quotes in the system. Add some!";
                 }
                 else
                 {
-                    quote = _dataService.GetRandomQuote(text);
-                    responseText = quote?.ToString() ?? $"{text} has no quotes. Must be pretty boring.";
+                    responseText = _dataService.GetRandomQuote(text)?.ToString() ?? $"{text} has no quotes. Must be pretty boring.";
+                }
+            }
+            else if (command == "search")
+            {
+                if (string.IsNullOrWhiteSpace(text))
+                {
+                    responseText = "Usage: search <searchTerm>";
+                }
+                else
+                {
+                    responseText = _dataService.GetRandomMatchingQuote(text)?.ToString() ?? "No matching quotes found.";
                 }
             }
             else if (command == "dispute")
@@ -96,6 +103,7 @@ namespace QuotableLambda
                 sb.AppendLine("Commands");
                 sb.AppendLine("add \"<quote>\" <quotee>");
                 sb.AppendLine("random [quotee]");
+                sb.AppendLine("search <searchTerm>");
                 sb.AppendLine("dispute");
                 sb.AppendLine("leaderboard [count]");
                 responseText = sb.ToString();

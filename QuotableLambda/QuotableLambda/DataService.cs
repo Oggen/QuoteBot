@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace QuotableLambda
 {
@@ -25,7 +26,21 @@ namespace QuotableLambda
             }
             else
             {
-                return quotes[_random.Next(quotes.Count - 1)];
+                return quotes[_random.Next(quotes.Count)];
+            }
+        }
+
+        public Quote GetRandomMatchingQuote(string searchTerm)
+        {
+            var regex = new Regex($"\\W{searchTerm.ToLower()}\\W");
+            var matchingQuotes = _dbService.GetAllQuotes().Where(q => regex.IsMatch(q.QuoteText.ToLower())).ToList();
+            if (matchingQuotes.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return matchingQuotes[_random.Next(matchingQuotes.Count)];
             }
         }
 
