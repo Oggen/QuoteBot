@@ -27,8 +27,17 @@ namespace QuotableLambda
         {
             var roomMessage = JsonConvert.DeserializeObject<RoomMessage>(request.Body);
             var message = roomMessage.Item.Message.MessageText.Trim();
-            var command = message.Split(' ')[1].ToLower();
-            var text = string.Join(" ", message.Split(' ').Skip(2).ToArray());
+            string command, text;
+            if (message.Split(' ').Length > 1)
+            {
+                command = message.Split(' ')[1].ToLower();
+                text = string.Join(" ", message.Split(' ').Skip(2).ToArray());
+            }
+            else
+            {
+                command = "";
+                text = "";
+            }
 
             string responseText;
 
