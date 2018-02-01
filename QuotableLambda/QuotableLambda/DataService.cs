@@ -68,6 +68,12 @@ namespace QuotableLambda
                     .Select(group => new Tuple<string, int>(group.Key, group.Count()))
                     .OrderByDescending(tuple => tuple.Item2)
                     .Take(topCount)
+                    .ToArray(),
+                MostNarcissistic = quotes.Where(quote => quote.AddedBy == quote.Quotee)
+                    .GroupBy(quote => quote.AddedBy)
+                    .Select(group => new Tuple<string, int>(group.Key, group.Count()))
+                    .OrderByDescending(tuple => tuple.Item2)
+                    .Take(topCount)
                     .ToArray()
             };
         }

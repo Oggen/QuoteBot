@@ -99,6 +99,11 @@ namespace QuotableLambda
                     {
                         sb.AppendLine($"{entry.Item1}: {entry.Item2}");
                     }
+                    sb.AppendLine("Most Narcissistic:");
+                    foreach (var entry in leaderboard.MostNarcissistic)
+                    {
+                        sb.AppendLine($"{entry.Item1}: {entry.Item2}");
+                    }
                     responseText = sb.ToString();
                 }
                 else
