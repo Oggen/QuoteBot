@@ -25,7 +25,19 @@ namespace QuotableLambda
 
         public APIGatewayProxyResponse FunctionHandler(APIGatewayProxyRequest request, ILambdaContext context)
         {
-            var roomMessage = JsonConvert.DeserializeObject<RoomMessage>(request.Body);
+            RoomMessage roomMessage;
+            try
+            {
+                roomMessage = JsonConvert.DeserializeObject<RoomMessage>(request.Body);
+            }
+            catch (Exception e)
+            {
+                return new APIGatewayProxyResponse
+                {
+                    Body = "Bad request",
+                    StatusCode = 400
+                };
+            }
             var message = roomMessage.Item.Message.MessageText.Trim();
             string command, text;
             if (message.Split(' ').Length > 1)
