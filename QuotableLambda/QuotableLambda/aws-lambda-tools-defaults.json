@@ -16,5 +16,6 @@
     "function-handler"     : "QuotableLambda::QuotableLambda.Function::FunctionHandler",
     "function-name"        : "QuoteBot",
     "function-role"        : "arn:aws:iam::637778433658:role/LambdaQuoteBot",
-    "environment-variables" : ""
+    "environment-variables" : "",
+    "tracing-mode"          : "PassThrough"
 }
