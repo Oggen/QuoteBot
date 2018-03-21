@@ -59,6 +59,7 @@ namespace QuotableLambda
             var quotes = _dbService.GetAllQuotes();
             return new Leaderboard
             {
+                QuoteCount = quotes.Count,
                 MostQuoted = quotes.GroupBy(quote => quote.Quotee)
                     .Select(group => new Tuple<string, int>(group.Key, group.Count()))
                     .OrderByDescending(tuple => tuple.Item2)

@@ -101,6 +101,7 @@ namespace QuotableLambda
                     var leaderboard = _dataService.GetLeaderboard(count);
                     var sb = new StringBuilder();
                     sb.AppendLine("Leaderboard");
+                    sb.AppendLine($"Quotes: {leaderboard.QuoteCount}");
                     sb.AppendLine("Most Quoted:");
                     foreach (var entry in leaderboard.MostQuoted)
                     {
