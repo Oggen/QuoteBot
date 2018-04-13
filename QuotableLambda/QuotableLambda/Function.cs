@@ -82,7 +82,7 @@ namespace QuotableLambda
             {
                 if (string.IsNullOrWhiteSpace(text))
                 {
-                    responseText = "Usage: search <searchTerm>";
+                    responseText = "Usage: search <regexSearchTerm>";
                 }
                 else
                 {
@@ -130,7 +130,7 @@ namespace QuotableLambda
                 sb.AppendLine("Commands");
                 sb.AppendLine("add \"<quote>\" <quotee>");
                 sb.AppendLine("random [quotee]");
-                sb.AppendLine("search <searchTerm>");
+                sb.AppendLine("search <regexSearchTerm>");
                 sb.AppendLine("dispute");
                 sb.AppendLine("leaderboard [count]");
                 responseText = sb.ToString();

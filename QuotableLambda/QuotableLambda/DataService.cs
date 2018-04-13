@@ -32,8 +32,8 @@ namespace QuotableLambda
 
         public Quote GetRandomMatchingQuote(string searchTerm)
         {
-            var regex = new Regex(searchTerm.ToLower());
-            var matchingQuotes = _dbService.GetAllQuotes().Where(q => regex.IsMatch(q.QuoteText.ToLower())).ToList();
+            var regex = new Regex(searchTerm, RegexOptions.IgnoreCase);
+            var matchingQuotes = _dbService.GetAllQuotes().Where(q => regex.IsMatch(q.QuoteText)).ToList();
             if (matchingQuotes.Count == 0)
             {
                 return null;
