@@ -13,7 +13,7 @@ namespace QuotableLambda
 
         public override string ToString()
         {
-            return $"{QuoteText} - {Quotee}";
+            return $"{QuoteText} - {Quotee.TrimStart('@')}";
         }
     }
 }

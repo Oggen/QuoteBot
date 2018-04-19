@@ -152,7 +152,7 @@ namespace QuotableLambda
         {
             var split = input.Split('"');
             if (split.Length < 3 || split[0].Length != 0 || split[split.Length - 1].Length == 0) return null;
-            var quotee = split[split.Length - 1].Trim();
+            var quotee = split[split.Length - 1].Trim().TrimStart('-', ' ', '—', '–');
             split[split.Length - 1] = "";
             var quote = string.Join("\"", split);
             return new Quote
